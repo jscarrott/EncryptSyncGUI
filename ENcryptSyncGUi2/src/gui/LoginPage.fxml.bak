@@ -6,14 +6,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="241.0" prefWidth="552.0" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LoginController">
+<AnchorPane prefHeight="389.0" prefWidth="515.0" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LoginController">
   <!-- TODO Add Nodes -->
   <children>
-    <TextField fx:id="UserTextField" layoutX="176.0" layoutY="73.0" prefWidth="200.0" />
-    <PasswordField fx:id="PasswordField" layoutX="176.0" layoutY="120.0" prefWidth="200.0" />
-    <Label layoutX="47.0" layoutY="76.0" text="User Name:" />
-    <Label layoutX="47.0" layoutY="123.0" text="Password:" />
-    <Button fx:id="LoginButton" layoutX="251.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login" />
-    <Text fx:id="actiontarget1" layoutX="265.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+    <TextField fx:id="UserTextField" layoutX="94.0" layoutY="101.0" prefWidth="200.0" />
+    <PasswordField fx:id="PasswordField" layoutX="94.0" layoutY="148.0" prefWidth="200.0" />
+    <Label layoutX="25.0" layoutY="101.0" text="User Name:" />
+    <Label layoutX="25.0" layoutY="148.0" text="Password:" />
+    <Button fx:id="LoginButton" layoutX="229.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login" />
+    <HBox layoutX="51.0" layoutY="181.0" prefHeight="22.0" prefWidth="399.0">
+      <children>
+        <Text fx:id="actiontarget1" strokeType="OUTSIDE" strokeWidth="0.0" />
+      </children>
+    </HBox>
+    <TableView fx:id="UserList" layoutX="14.0" layoutY="181.0" prefHeight="200.0" prefWidth="200.0">
+      <columns>
+        <TableColumn editable="false" minWidth="175.0" prefWidth="75.0" text="Profile" fx:id="ProfileNameColumn" />
+      </columns>
+    </TableView>
   </children>
 </AnchorPane>

@@ -6,6 +6,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +15,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import core.CoordinatingClass;
 import core.Encryptor;
+import core.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -87,8 +90,22 @@ public class EncryptSyncGui extends Application {
 	
 	
 	
-	void loginUser(String user, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException{
-		coordClass.addNewUser("Bob Harold", "C:\\Users\\Home\\git\\EncryptSync\\EncryptSync\\testIn", "C:\\Users\\Home\\git\\EncryptSync\\EncryptSync\\testOut") ;
-		coordClass.saveUserListToFile();
+	boolean loginUser(String user, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException{
+		if(coordClass.loginUser(user, password)) return true;
+		return false;
 	}
+	
+	/*ArrayList<String> getUsers(){
+		ArrayList<String> data = new ArrayList<String>();
+		List<User> userList = coordClass.getUsers();
+		for(int counter = 0; counter < userList.size(); counter++){
+			data.add(userList.get(counter).toString());
+		}
+		return data;
+	}*/
+	
+	List<User> getUsers(){
+		return coordClass.getUsers();
+	}
+	
 }
