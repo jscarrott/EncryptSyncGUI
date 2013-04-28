@@ -26,57 +26,63 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-
 public class LoginController extends AnchorPane implements Initializable {
-	
-	
-	 
-	    @FXML private Text actiontarget1;
-	    @FXML private PasswordField passwordField;
-	    @FXML private TextField userTextField;
-	    @FXML private TableView<User> userList;
-	    @FXML private TableColumn<User, String> profileNameColumn;
-	    
-	    private EncryptSyncGui application;
-	    
-	    @SuppressWarnings("unchecked")
-		public void setApp(EncryptSyncGui application){
-	        this.application = application;
-	        ObservableList<User> data = FXCollections.observableList(application.getUsers());
-	       profileNameColumn = new TableColumn<User, String>("Profile");
-	       profileNameColumn = (TableColumn<User, String>) userList.getColumns().get(0);
-	       profileNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-	        //ProfileNameColumn.setMinWidth(200);
-	        //userList.getColumns().add((TableColumn<User, String>) profileNameColumn);
-	        
-	        userList.setItems(data);
-	    }
-	    
-	    @FXML protected void handleSubmitButtonAction(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
-	        actiontarget1. setText("Sign in button pressed");
-	        try {
-		        if(application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())){
-		        	 application.gotoMainPage();
-		        	
-		        }
-			} catch (Exception e) {
-				actiontarget1.setText("Login method failed");
+
+	@FXML
+	private Text actiontarget1;
+	@FXML
+	private PasswordField passwordField;
+	@FXML
+	private TextField userTextField;
+	@FXML
+	private TableView<User> userList;
+	@FXML
+	private TableColumn<User, String> profileNameColumn;
+
+	private EncryptSyncGui application;
+
+	@SuppressWarnings("unchecked")
+	public void setApp(EncryptSyncGui application) {
+		this.application = application;
+		ObservableList<User> data = FXCollections.observableList(application.getUsers());
+		profileNameColumn = new TableColumn<User, String>("Profile");
+		profileNameColumn = (TableColumn<User, String>) userList.getColumns().get(0);
+		profileNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+		TableColumn<User, String> UnencryptedDirColumn = new TableColumn<User, String>("UnencryptedDirectory");
+		UnencryptedDirColumn.setCellValueFactory(new PropertyValueFactory<User, String>("UnencryptedDirectoryString"));
+		userList.getColumns().add((TableColumn<User, String>) UnencryptedDirColumn);
+		TableColumn<User, String> EncryptedDirColumn = new TableColumn<User, String>("EncryptedDirectory");
+		EncryptedDirColumn.setCellValueFactory(new PropertyValueFactory<User, String>("EncryptedDirectoryString"));
+		userList.getColumns().add((TableColumn<User, String>) EncryptedDirColumn);
+
+		userList.setItems(data);
+	}
+
+	@FXML
+	protected void handleSubmitButtonAction(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
+		actiontarget1.setText("Sign in button pressed");
+		try {
+			if (application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())) {
+				application.gotoMainPage();
+
 			}
-
-	        actiontarget1. setText("Login Failed.");
-
-	    }
-	    
-	    @FXML protected void handleNewUserButton(ActionEvent event){
-	    	application.gotoNewUserPage();
-	    }
-
-		@Override
-		public void initialize(URL location, ResourceBundle resources) {
-			// TODO Auto-generated method stub
-			
+		} catch (Exception e) {
+			actiontarget1.setText("Login method failed");
 		}
-	    
-	    
+
+		actiontarget1.setText("Login Failed.");
+
+	}
+
+	@FXML
+	protected void handleNewUserButton(ActionEvent event) {
+		application.gotoNewUserPage();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

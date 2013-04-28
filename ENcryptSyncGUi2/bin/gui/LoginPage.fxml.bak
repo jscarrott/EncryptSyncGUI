@@ -11,7 +11,7 @@
   <children>
     <GridPane id="GridPane" layoutX="22.0" layoutY="264.0">
       <children>
-        <PasswordField fx:id="PasswordField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <PasswordField id="PasswordField" fx:id="passwordField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
       </children>
       <columnConstraints>
@@ -30,7 +30,7 @@
     </HBox>
     <TableView id="UserList" fx:id="userList" layoutX="14.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0">
       <columns>
-        <TableColumn editable="false" prefWidth="75.0" text="Profile" fx:id="ProfileNameColumn" />
+        <TableColumn editable="false" prefWidth="75.0" text="Profile" fx:id="profileNameColumn" />
       </columns>
     </TableView>
     <Button fx:id="newUserButton" layoutX="339.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleNewUserButton" text="New User" />

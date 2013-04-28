@@ -99,7 +99,39 @@ public class EncryptSyncGui extends Application {
         return (Initializable) loader.getController();
     }
 	
+	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory){
+		try {
+			coordClass.addNewUser(name, unencryptedDirectory, encryptedDirectory, password);
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
+	}
+	
+	void writeProfiles(){
+		try {
+			coordClass.saveUserListToFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	boolean loginUser(String user, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException{
 		if(coordClass.loginUser(user, password)) return true;
