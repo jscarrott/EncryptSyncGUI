@@ -9,16 +9,30 @@
 <AnchorPane prefHeight="389.0" prefWidth="515.0" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LoginController">
   <!-- TODO Add Nodes -->
   <children>
-    <TextField fx:id="UserTextField" layoutX="94.0" layoutY="101.0" prefWidth="200.0" />
-    <PasswordField fx:id="PasswordField" layoutX="94.0" layoutY="148.0" prefWidth="200.0" />
-    <Label layoutX="25.0" layoutY="101.0" text="User Name:" />
-    <Label layoutX="25.0" layoutY="148.0" text="Password:" />
-    <Button fx:id="LoginButton" layoutX="229.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login" />
-    <HBox layoutX="51.0" layoutY="181.0" prefHeight="22.0" prefWidth="399.0">
+    <GridPane id="GridPane" layoutX="22.0" layoutY="264.0">
+      <children>
+        <PasswordField id="PasswordField" fx:id="passwordField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Button fx:id="LoginButton" layoutX="339.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login" />
+    <HBox layoutX="29.0" layoutY="310.0" prefHeight="22.0" prefWidth="399.0">
       <children>
         <Text fx:id="actiontarget1" strokeType="OUTSIDE" strokeWidth="0.0" />
       </children>
     </HBox>
-    <TableView fx:id="UserList" layoutX="14.0" layoutY="181.0" prefHeight="200.0" prefWidth="200.0" />
+    <TableView id="UserList" fx:id="userList" layoutX="14.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0">
+      <columns>
+        <TableColumn editable="false" prefWidth="75.0" text="Profile" fx:id="profileNameColumn" />
+      </columns>
+    </TableView>
+    <Button fx:id="newUserButton" layoutX="339.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleNewUserButton" text="New User" />
   </children>
 </AnchorPane>

@@ -55,6 +55,7 @@ public class EncryptSyncGui extends Application {
 	private void gotoLogin() {
         try {
             LoginController login = (LoginController) replaceSceneContent("LoginPage.fxml");
+            //login.initialize(null, null);
             login.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(EncryptSyncGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,13 +64,23 @@ public class EncryptSyncGui extends Application {
 	
 	 void gotoMainPage() {
         try {
-            LoginController login = (LoginController) replaceSceneContent("MainPage.fxml");
-           // login.setApp(this);
+            MainPageController mainPage = (MainPageController) replaceSceneContent("MainPage.fxml");
+            //mainPage.initialize(null, null);
+            mainPage.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(EncryptSyncGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 	
+	 void gotoNewUserPage() {
+	        try {
+	           NewUserController newUser = (NewUserController) replaceSceneContent("NewUserPage.fxml");
+	          // newUser.initialize(null, null);
+	            newUser.setApp(this);
+	        } catch (Exception ex) {
+	            Logger.getLogger(EncryptSyncGui.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	    }
 	
 	private Initializable replaceSceneContent(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();

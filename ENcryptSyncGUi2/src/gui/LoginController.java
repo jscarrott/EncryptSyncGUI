@@ -32,29 +32,43 @@ public class LoginController extends AnchorPane implements Initializable {
 	
 	 
 	    @FXML private Text actiontarget1;
-	    @FXML private PasswordField PasswordField;
-	    @FXML private TextField UserTextField;
-	    @FXML private TableView<User> UserList;
-	    @FXML private TableColumn<User, String> ProfileNameColumn;
+	    @FXML private PasswordField passwordField;
+	    @FXML private TextField userTextField;
+	    @FXML private TableView<User> userList;
+	    @FXML private TableColumn<User, String> profileNameColumn;
 	    
 	    private EncryptSyncGui application;
 	    
-	    public void setApp(EncryptSyncGui application){
+	    @SuppressWarnings("unchecked")
+		public void setApp(EncryptSyncGui application){
 	        this.application = application;
 	        ObservableList<User> data = FXCollections.observableList(application.getUsers());
-	       ProfileNameColumn = new TableColumn<User, String>("Profile");
-	        ProfileNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-	        ProfileNameColumn.setMinWidth(200);
-	        UserList.getColumns().add((TableColumn<User, String>) ProfileNameColumn);
+	       profileNameColumn = new TableColumn<User, String>("Profile");
+	       profileNameColumn = (TableColumn<User, String>) userList.getColumns().get(0);
+	       profileNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+	        //ProfileNameColumn.setMinWidth(200);
+	        //userList.getColumns().add((TableColumn<User, String>) profileNameColumn);
 	        
-	        UserList.setItems(data);
+	        userList.setItems(data);
 	    }
 	    
 	    @FXML protected void handleSubmitButtonAction(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
 	        actiontarget1. setText("Sign in button pressed");
-	        application.loginUser(UserList.getSelectionModel().getSelectedItem().getName(), PasswordField.getText());
-	        application.gotoMainPage();
+	        try {
+		        if(application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())){
+		        	 application.gotoMainPage();
+		        	
+		        }
+			} catch (Exception e) {
+				actiontarget1.setText("Login method failed");
+			}
 
+	        actiontarget1. setText("Login Failed.");
+
+	    }
+	    
+	    @FXML protected void handleNewUserButton(ActionEvent event){
+	    	application.gotoNewUserPage();
 	    }
 
 		@Override
