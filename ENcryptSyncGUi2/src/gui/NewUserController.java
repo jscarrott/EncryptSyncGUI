@@ -32,6 +32,7 @@ public class NewUserController extends AnchorPane implements Initializable {
 		File file = new File(currentDir);
 		fc.setInitialDirectory(file);
 		UnencryptedDirectory = fc.showDialog(null).toString();
+		//TODO Catch exception from canceling the dialog, as well as handling the null string created.
 		
 	}
 	
@@ -42,11 +43,13 @@ public class NewUserController extends AnchorPane implements Initializable {
 		File file = new File(currentDir);
 		fc.setInitialDirectory(file);
 		EncryptedDirectory = fc.showDialog(null).toString();
+		//TODO Catch exception from canceling the dialog, as well as handling the null string created.
 	}
 
 	@FXML protected void HandleCreateProfileButton(ActionEvent event){
 		application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
 		application.writeProfiles();
+		application.setCurrentUserFromString(nameField.getText());
 	}
 	
 	

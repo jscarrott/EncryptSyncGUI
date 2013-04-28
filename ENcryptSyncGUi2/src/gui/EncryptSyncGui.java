@@ -31,6 +31,7 @@ public class EncryptSyncGui extends Application {
 	private Stage stage;
     private final double MINIMUM_WINDOW_WIDTH = 390.0;
     private final double MINIMUM_WINDOW_HEIGHT = 500.0;
+    private User CurrentProfile;
 
 	@Override
 	 public void start(Stage primaryStage) throws Exception {
@@ -124,6 +125,25 @@ public class EncryptSyncGui extends Application {
 	
 	}
 	
+User getCurrentProfile(){
+	return CurrentProfile;
+	
+}
+	
+void setCurrentProfile(User setProfile){
+	CurrentProfile = setProfile;
+}
+
+boolean setCurrentUserFromString(String userName){
+	
+	for(User user : getUsers()){
+		if(user.getName().equals(userName)){
+			CurrentProfile = user;
+			return true;
+		}
+	}
+	return false;
+}
 	void writeProfiles(){
 		try {
 			coordClass.saveUserListToFile();

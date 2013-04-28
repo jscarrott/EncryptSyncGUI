@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="389.0" prefWidth="515.0" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LoginController">
+<AnchorPane prefHeight="389.0000999999975" prefWidth="756.0" xmlns:fx="http://javafx.com/fxml" fx:controller="gui.LoginController">
   <!-- TODO Add Nodes -->
   <children>
     <GridPane id="GridPane" layoutX="22.0" layoutY="264.0">
@@ -28,7 +28,7 @@
         <Text fx:id="actiontarget1" strokeType="OUTSIDE" strokeWidth="0.0" />
       </children>
     </HBox>
-    <TableView id="UserList" fx:id="userList" layoutX="14.0" layoutY="34.0" prefHeight="201.0" prefWidth="469.0">
+    <TableView id="UserList" fx:id="userList" layoutX="14.0" layoutY="34.0" prefHeight="201.0" prefWidth="719.0">
       <columns>
         <TableColumn editable="false" prefWidth="75.0" text="Profile" fx:id="profileNameColumn" />
       </columns>
