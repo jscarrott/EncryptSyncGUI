@@ -158,6 +158,24 @@ boolean setCurrentUserFromString(String userName){
 		return false;
 	}
 	
+	void encryptFilesUsingCurrentProfile(){
+		try {
+			coordClass.encryptFiles(CurrentProfile);
+		} catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	void decryptFilesUsingCurrentProfile(){
+		try {
+			coordClass.decryptFiles(CurrentProfile);
+		} catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/*ArrayList<String> getUsers(){
 		ArrayList<String> data = new ArrayList<String>();
 		List<User> userList = coordClass.getUsers();
@@ -170,5 +188,10 @@ boolean setCurrentUserFromString(String userName){
 	List<User> getUsers(){
 		return coordClass.getUsers();
 	}
+	
+	void updateFilesInCurrentProfile(){
+		
+		coordClass.updateFilesInDirectories(CurrentProfile);
+		}
 	
 }

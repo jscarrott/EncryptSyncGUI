@@ -50,6 +50,7 @@ public class NewUserController extends AnchorPane implements Initializable {
 		application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
 		application.writeProfiles();
 		application.setCurrentUserFromString(nameField.getText());
+		application.gotoMainPage();
 	}
 	
 	

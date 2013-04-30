@@ -63,14 +63,15 @@ public class LoginController extends AnchorPane implements Initializable {
 		actiontarget1.setText("Sign in button pressed");
 		try {
 			if (application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())) {
+				application.setCurrentUserFromString(userList.getSelectionModel().getSelectedItem().getName());
 				application.gotoMainPage();
-
-			}
+						}
+			else{actiontarget1.setText("Login Failed.");}
 		} catch (Exception e) {
 			actiontarget1.setText("Login method failed");
 		}
 
-		actiontarget1.setText("Login Failed.");
+		
 
 	}
 
