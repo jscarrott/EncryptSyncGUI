@@ -16,7 +16,7 @@
         <TextField id="name" fx:id="nameField" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Button mnemonicParsing="false" onAction="#SelectUnencryptedDirectory" text="Unencrypted Directory Select" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Button mnemonicParsing="false" onAction="#SelectEncryptedDirectory" text="Encrypted Directory Select" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <Button mnemonicParsing="false" onAction="#HandleCreateProfileButton" text="Create Profile" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <Button fx:id="createProfileButton" mnemonicParsing="false" onAction="#HandleCreateProfileButton" opacity="0.3" text="Create Profile" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="87.0" />

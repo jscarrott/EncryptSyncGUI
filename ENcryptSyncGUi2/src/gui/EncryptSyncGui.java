@@ -32,7 +32,9 @@ public class EncryptSyncGui extends Application {
     private final double MINIMUM_WINDOW_WIDTH = 390.0;
     private final double MINIMUM_WINDOW_HEIGHT = 500.0;
     private User CurrentProfile;
-
+/** creates the starting stage and calls the login method
+ * 
+ */
 	@Override
 	 public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
@@ -43,6 +45,15 @@ public class EncryptSyncGui extends Application {
         primaryStage.show();
 	    }
 	
+	/** creates the coordinating class to have all core methods called from
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidKeySpecException
+	 * @throws NoSuchPaddingException
+	 * @throws InvalidAlgorithmParameterException
+	 * @throws IOException
+	 */
 	public EncryptSyncGui() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
 		coordClass = new core.CoordinatingClass();
 	}
@@ -52,7 +63,9 @@ public class EncryptSyncGui extends Application {
 		
 		
 	}
-	
+	/** goes to login page and sets it up
+	 * 
+	 */
 	private void gotoLogin() {
         try {
             LoginController login = (LoginController) replaceSceneContent("LoginPage.fxml");
@@ -62,7 +75,9 @@ public class EncryptSyncGui extends Application {
             Logger.getLogger(EncryptSyncGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-	
+	/** goto mainpage and sets it up
+	 * 
+	 */
 	 void gotoMainPage() {
         try {
             MainPageController mainPage = (MainPageController) replaceSceneContent("MainPage.fxml");
@@ -72,7 +87,9 @@ public class EncryptSyncGui extends Application {
             Logger.getLogger(EncryptSyncGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-	
+	/** goto new user page and sets it up
+	 * 
+	 */
 	 void gotoNewUserPage() {
 	        try {
 	           NewUserController newUser = (NewUserController) replaceSceneContent("NewUserPage.fxml");
@@ -83,6 +100,12 @@ public class EncryptSyncGui extends Application {
 	        }
 	    }
 	
+	 /** handles the switching of the scene, currently not sure I really understand what's going on here.
+	  * 
+	  * @param fxml
+	  * @return
+	  * @throws Exception
+	  */
 	private Initializable replaceSceneContent(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         InputStream in = EncryptSyncGui.class.getResourceAsStream(fxml);
@@ -99,7 +122,13 @@ public class EncryptSyncGui extends Application {
         stage.sizeToScene();
         return (Initializable) loader.getController();
     }
-	
+	/** creates a new user, should handle the exceptions as well but I am unsure what to do with them.
+	 * 
+	 * @param name
+	 * @param password
+	 * @param unencryptedDirectory
+	 * @param encryptedDirectory
+	 */
 	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory){
 		try {
 			coordClass.addNewUser(name, unencryptedDirectory, encryptedDirectory, password);
@@ -124,7 +153,10 @@ public class EncryptSyncGui extends Application {
 		}
 	
 	}
-	
+	/** return the profile of the currently logged in user
+	 * 
+	 * @return
+	 */
 User getCurrentProfile(){
 	return CurrentProfile;
 	
@@ -176,14 +208,7 @@ boolean setCurrentUserFromString(String userName){
 		}
 	}
 	
-	/*ArrayList<String> getUsers(){
-		ArrayList<String> data = new ArrayList<String>();
-		List<User> userList = coordClass.getUsers();
-		for(int counter = 0; counter < userList.size(); counter++){
-			data.add(userList.get(counter).toString());
-		}
-		return data;
-	}*/
+
 	
 	List<User> getUsers(){
 		return coordClass.getUsers();

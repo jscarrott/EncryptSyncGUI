@@ -21,7 +21,10 @@ public class MainPageController  extends AnchorPane implements Initializable {
 	private Path UnencryptedDirectory;
 	private ObservableList<File> UnEnData;
 	private ObservableList<File> EnData;
-	
+	/** sets the Listviews up and makes sure the main application is set up
+	 * 
+	 * @param application
+	 */
 void setApp(EncryptSyncGui application){
 	this.application = application;
 	UnEnData = FXCollections.observableArrayList(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
@@ -29,7 +32,10 @@ void setApp(EncryptSyncGui application){
 	EnData = FXCollections.observableArrayList(application.getCurrentProfile().getEncryptedDirectory().getContainedFiles());
 	EncryptedListFiles .setItems(EnData);
 	}
-
+/** encrypts the directory and updates the listview.
+ * 
+ * @param event
+ */
 @FXML protected void handleEncryptFilesButton(ActionEvent event){
 	application.encryptFilesUsingCurrentProfile();
 	application.updateFilesInCurrentProfile();
@@ -41,12 +47,19 @@ void setApp(EncryptSyncGui application){
 	UnencryptedListFiles .setItems(UnEnData);
 	
 }
-
+/** Decrypts the directory and updates the listview.
+ * 
+ * @param event
+ */
 @FXML protected void handleDecryptFilesButton(ActionEvent event){
 	application.decryptFilesUsingCurrentProfile();
 	application.updateFilesInCurrentProfile();
-	UnEnData = FXCollections.observableArrayList(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
-	EnData = FXCollections.observableArrayList(application.getCurrentProfile().getEncryptedDirectory().getContainedFiles());
+	EnData.clear();
+	EnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
+	UnEnData.clear();
+	UnEnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
+	EncryptedListFiles .setItems(EnData);
+	UnencryptedListFiles .setItems(UnEnData);
 }
 
 @Override

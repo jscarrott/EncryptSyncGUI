@@ -40,7 +40,10 @@ public class LoginController extends AnchorPane implements Initializable {
 	private TableColumn<User, String> profileNameColumn;
 
 	private EncryptSyncGui application;
-
+/**sets up the listview with data
+ * 
+ * @param application
+ */
 	@SuppressWarnings("unchecked")
 	public void setApp(EncryptSyncGui application) {
 		this.application = application;
@@ -57,7 +60,16 @@ public class LoginController extends AnchorPane implements Initializable {
 
 		userList.setItems(data);
 	}
-
+/** logs in the currently selected user.
+ * 
+ * @param event
+ * @throws InvalidKeyException
+ * @throws NoSuchAlgorithmException
+ * @throws InvalidKeySpecException
+ * @throws NoSuchPaddingException
+ * @throws InvalidAlgorithmParameterException
+ * @throws IOException
+ */
 	@FXML
 	protected void handleSubmitButtonAction(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
 		actiontarget1.setText("Sign in button pressed");
@@ -65,16 +77,15 @@ public class LoginController extends AnchorPane implements Initializable {
 			if (application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())) {
 				application.setCurrentUserFromString(userList.getSelectionModel().getSelectedItem().getName());
 				application.gotoMainPage();
-						}
-			else{actiontarget1.setText("Login Failed.");}
+			} else {
+				actiontarget1.setText("Login Failed.");
+			}
 		} catch (Exception e) {
 			actiontarget1.setText("Login method failed");
 		}
 
-		
-
 	}
-
+//TODO: stop login button from activating if no user selected or no password input.
 	@FXML
 	protected void handleNewUserButton(ActionEvent event) {
 		application.gotoNewUserPage();
