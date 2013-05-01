@@ -47,7 +47,7 @@ void setApp(EncryptSyncGui application){
 	UnencryptedListFiles .setItems(UnEnData);
 	
 }
-/** Decrypts the directory and updates the listview.
+/** Decrypts the directory and updates the listview .
  * 
  * @param event
  */
