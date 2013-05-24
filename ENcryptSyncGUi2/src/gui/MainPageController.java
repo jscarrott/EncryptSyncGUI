@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Path;
+import java.security.NoSuchProviderException;
 import java.util.ResourceBundle;
 import core.User;
 import javafx.collections.FXCollections;
@@ -40,22 +41,23 @@ void setApp(EncryptSyncGui application){
 	application.encryptFilesUsingCurrentProfile();
 	application.updateFilesInCurrentProfile();
 	EnData.clear();
-	EnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
+	EnData.addAll(application.getCurrentProfile().getEncryptedDirectory().getContainedFiles());
 	UnEnData.clear();
 	UnEnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
 	EncryptedListFiles .setItems(EnData);
 	UnencryptedListFiles .setItems(UnEnData);
 	
 }
-/** Decrypts the directory and updates the listview.
+/** Decrypts the directory and updates the listview .
  * 
  * @param event
+ * @throws NoSuchProviderException 
  */
-@FXML protected void handleDecryptFilesButton(ActionEvent event){
+@FXML protected void handleDecryptFilesButton(ActionEvent event) throws NoSuchProviderException{
 	application.decryptFilesUsingCurrentProfile();
 	application.updateFilesInCurrentProfile();
 	EnData.clear();
-	EnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
+	EnData.addAll(application.getCurrentProfile().getEncryptedDirectory().getContainedFiles());
 	UnEnData.clear();
 	UnEnData.addAll(application.getCurrentProfile().getUnencryptedDirectory().getContainedFiles());
 	EncryptedListFiles .setItems(EnData);

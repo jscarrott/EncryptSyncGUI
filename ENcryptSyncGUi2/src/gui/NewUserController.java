@@ -2,6 +2,7 @@ package gui;
 
 import java.io.File;
 import java.net.URL;
+import java.security.NoSuchProviderException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ public class NewUserController extends AnchorPane implements Initializable {
 	 */
 	@FXML
 	protected void SelectUnencryptedDirectory(ActionEvent event) {
-		try {
+
 			DirectoryChooser fc = new DirectoryChooser();
 			fc.setTitle("Open Dialog");
 			String currentDir = System.getProperty("user.dir") + File.separator;
@@ -49,9 +50,7 @@ public class NewUserController extends AnchorPane implements Initializable {
 			UnencryptedDirectory = fc.showDialog(null).toString();
 			// TODO Catch exception from canceling the dialog, as well as
 			// handling the null string created.
-		} catch (Exception e) {
-
-		}
+		
 		if (checkAllFieldsFilled())
 			createProfileButton.setOpacity(1);
 
@@ -62,7 +61,6 @@ public class NewUserController extends AnchorPane implements Initializable {
 	 */
 	@FXML
 	protected void SelectEncryptedDirectory(ActionEvent event) {
-		try {
 			DirectoryChooser fc = new DirectoryChooser();
 			fc.setTitle("Open Dialog");
 			String currentDir = System.getProperty("user.dir") + File.separator;
@@ -71,9 +69,6 @@ public class NewUserController extends AnchorPane implements Initializable {
 			EncryptedDirectory = fc.showDialog(null).toString();
 			// TODO Catch exception from canceling the dialog, as well as
 			// handling the null string created.
-		} catch (Exception e) {
-
-		}
 		if (checkAllFieldsFilled())
 			createProfileButton.setOpacity(1);
 
@@ -81,11 +76,18 @@ public class NewUserController extends AnchorPane implements Initializable {
 /** Creates a new user using the required method then saves it to the config file and set the current user profile. Then changes the page to the main page.
  * 
  * @param event button press #HandleCreateProfileButton 
+ * @throws NoSuchProviderException 
  */
 	@FXML
 	protected void HandleCreateProfileButton(ActionEvent event) {
 		if (checkAllFieldsFilled()) {
-			application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
+			try {
+				application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
+			} catch (NoSuchProviderException e) {
+				ExceptionWarningBox warningbox = new ExceptionWarningBox();
+				warningbox.Dialog("Encryption provider not found.", "Ok");
+				e.printStackTrace();
+			}
 			application.writeProfiles();
 			application.setCurrentUserFromString(nameField.getText());
 			application.gotoMainPage();
