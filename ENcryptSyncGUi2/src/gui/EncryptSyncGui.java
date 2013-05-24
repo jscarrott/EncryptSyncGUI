@@ -1,17 +1,23 @@
 package gui;
 
+import java.awt.Dialog;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+
+import org.bouncycastle.crypto.CryptoException;
 
 import core.CoordinatingClass;
 import core.Encryptor;
@@ -23,6 +29,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class EncryptSyncGui extends Application {
@@ -38,7 +45,7 @@ public class EncryptSyncGui extends Application {
 	@Override
 	 public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-        stage.setTitle("FXML Login Sample");
+        stage.setTitle("EncryptSync");
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         gotoLogin();
@@ -106,7 +113,7 @@ public class EncryptSyncGui extends Application {
 	  * @return
 	  * @throws Exception
 	  */
-	private Initializable replaceSceneContent(String fxml) throws Exception {
+	Initializable replaceSceneContent(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         InputStream in = EncryptSyncGui.class.getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -128,8 +135,9 @@ public class EncryptSyncGui extends Application {
 	 * @param password
 	 * @param unencryptedDirectory
 	 * @param encryptedDirectory
+	 * @throws NoSuchProviderException 
 	 */
-	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory){
+	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory) throws NoSuchProviderException{
 		try {
 			coordClass.addNewUser(name, unencryptedDirectory, encryptedDirectory, password);
 		} catch (InvalidKeyException e) {
@@ -180,12 +188,12 @@ boolean setCurrentUserFromString(String userName){
 		try {
 			coordClass.saveUserListToFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 	
-	boolean loginUser(String user, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException{
+	boolean loginUser(String user, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException, NoSuchProviderException{
 		if(coordClass.loginUser(user, password)) return true;
 		return false;
 	}
@@ -193,17 +201,59 @@ boolean setCurrentUserFromString(String userName){
 	void encryptFilesUsingCurrentProfile(){
 		try {
 			coordClass.encryptFiles(CurrentProfile);
-		} catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch ( NoSuchPaddingException | IOException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Crypto provider not found!", "Ok");
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("AES key not valid. This is generated from you password and implies a problem with the salt or AES key generator.", "Ok");
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
 			e.printStackTrace();
 		}
 	}
 	
-	void decryptFilesUsingCurrentProfile(){
+	void decryptFilesUsingCurrentProfile() throws NoSuchProviderException{
 		try {
 			coordClass.decryptFiles(CurrentProfile);
-		} catch (InvalidKeyException | InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch ( NoSuchPaddingException | IOException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Crypto provider not found!", "Ok");
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("AES key not valid. This is generated from you password and implies a problem with the salt or AES key generator.", "Ok");
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
+			e.printStackTrace();
+		}catch (BadPaddingException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
 			e.printStackTrace();
 		}
 	}

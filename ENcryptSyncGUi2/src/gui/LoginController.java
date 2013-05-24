@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.image.ReplicateScaleFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class LoginController extends AnchorPane implements Initializable {
 
@@ -63,15 +65,10 @@ public class LoginController extends AnchorPane implements Initializable {
 /** logs in the currently selected user.
  * 
  * @param event
- * @throws InvalidKeyException
- * @throws NoSuchAlgorithmException
- * @throws InvalidKeySpecException
- * @throws NoSuchPaddingException
- * @throws InvalidAlgorithmParameterException
- * @throws IOException
+ * @throws Exception 
  */
 	@FXML
-	protected void handleSubmitButtonAction(ActionEvent event) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, IOException {
+	protected void handleSubmitButtonAction(ActionEvent event) throws Exception {
 		actiontarget1.setText("Sign in button pressed");
 		try {
 			if (application.loginUser(userList.getSelectionModel().getSelectedItem().getName(), passwordField.getText())) {
@@ -79,9 +76,13 @@ public class LoginController extends AnchorPane implements Initializable {
 				application.gotoMainPage();
 			} else {
 				actiontarget1.setText("Login Failed.");
+				ExceptionWarningBox warningbox = new ExceptionWarningBox();
+				warningbox.Dialog("Password incorrect!", "Ok");
 			}
 		} catch (Exception e) {
 			actiontarget1.setText("Login method failed");
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("The Login failed possibly due to the configuration files being corrupted or no longer existing.", "Ok ");
 		}
 
 	}
