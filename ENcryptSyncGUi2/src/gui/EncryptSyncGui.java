@@ -137,26 +137,38 @@ public class EncryptSyncGui extends Application {
 	 * @param encryptedDirectory
 	 * @throws NoSuchProviderException 
 	 */
-	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory) throws NoSuchProviderException{
+	void createNewUser(String name, String password, String unencryptedDirectory, String encryptedDirectory) {
 		try {
 			coordClass.addNewUser(name, unencryptedDirectory, encryptedDirectory, password);
+		} 
+		catch ( NoSuchPaddingException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Crypto provider not found!", "Ok");
+			e.printStackTrace();
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("AES key not valid. This is generated from you password and implies a problem with the salt or AES key generator.", "Ok");
 			e.printStackTrace();
 		} catch (InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
+			e.printStackTrace();
+		}
+		catch (InvalidKeySpecException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Read/Write problem. Directory no longer exists or insufficient permissions", "Ok");
 			e.printStackTrace();
 		}
 	
@@ -201,7 +213,7 @@ boolean setCurrentUserFromString(String userName){
 	void encryptFilesUsingCurrentProfile(){
 		try {
 			coordClass.encryptFiles(CurrentProfile);
-		} catch ( NoSuchPaddingException | IOException e) {
+		} catch ( NoSuchPaddingException e) {
 			ExceptionWarningBox warningbox = new ExceptionWarningBox();
 			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
 			e.printStackTrace();
@@ -221,13 +233,17 @@ boolean setCurrentUserFromString(String userName){
 			ExceptionWarningBox warningbox = new ExceptionWarningBox();
 			warningbox.Dialog("Invalid algorithm for encryption specified, implied corruption of key EncyptSync files", "Ok");
 			e.printStackTrace();
+		} catch (IOException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Read/Write problem. Directory no longer exists or insufficient permissions", "Ok");
+			e.printStackTrace();
 		}
 	}
 	
 	void decryptFilesUsingCurrentProfile() throws NoSuchProviderException{
 		try {
 			coordClass.decryptFiles(CurrentProfile);
-		} catch ( NoSuchPaddingException | IOException e) {
+		} catch ( NoSuchPaddingException  e) {
 			ExceptionWarningBox warningbox = new ExceptionWarningBox();
 			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
 			e.printStackTrace();
@@ -254,6 +270,10 @@ boolean setCurrentUserFromString(String userName){
 		} catch (IllegalBlockSizeException e) {
 			ExceptionWarningBox warningbox = new ExceptionWarningBox();
 			warningbox.Dialog("Cipher text invalid. May have been tampered with!", "Ok");
+			e.printStackTrace();
+		} catch (IOException e) {
+			ExceptionWarningBox warningbox = new ExceptionWarningBox();
+			warningbox.Dialog("Read/Write problem. Directory no longer exists or insufficient permissions", "Ok");
 			e.printStackTrace();
 		}
 	}

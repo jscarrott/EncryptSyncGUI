@@ -81,13 +81,7 @@ public class NewUserController extends AnchorPane implements Initializable {
 	@FXML
 	protected void HandleCreateProfileButton(ActionEvent event) {
 		if (checkAllFieldsFilled()) {
-			try {
-				application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
-			} catch (NoSuchProviderException e) {
-				ExceptionWarningBox warningbox = new ExceptionWarningBox();
-				warningbox.Dialog("Encryption provider not found.", "Ok");
-				e.printStackTrace();
-			}
+			application.createNewUser(nameField.getText(), passwordField.getText(), UnencryptedDirectory, EncryptedDirectory);
 			application.writeProfiles();
 			application.setCurrentUserFromString(nameField.getText());
 			application.gotoMainPage();
